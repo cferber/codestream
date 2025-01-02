@@ -1,0 +1,105 @@
+id: 25ea6ccf-bd2b-4363-b3cd-d237f201206d
+createdAt: '2022-10-19T20:46:05.410972Z'
+createdBy: cferber
+updatedAt: '2023-06-22T09:18:06.144161Z'
+updatedBy: cferber
+orgId: 084f2d85-99a1-4fd0-bf08-927ea57fd2dd
+projectId: d59e9c65-cfcb-467e-8267-562d760b4570
+projectName: demo-project
+selfLink: /blueprint/api/blueprints/25ea6ccf-bd2b-4363-b3cd-d237f201206d
+name: CentOS 8 Custom
+description: Provision a CentOS VM with dynamic network selection and additional meta
+  data.
+status: DRAFT
+content: |
+  ---
+  formatVersion: 1
+  inputs:
+    cpu:
+      type: "integer"
+      title: "CPU"
+      default: 2
+      enum:
+      - 1
+      - 2
+      - 4
+    memory:
+      type: "integer"
+      title: "RAM (MB)"
+      default: 2048
+      enum:
+      - 1024
+      - 2048
+      - 4096
+      - 8192
+    disk:
+      type: "integer"
+      title: "Disk Size (GB)"
+      default: 10
+      enum:
+      - 10
+      - 50
+      - 100
+    environment:
+      type: "string"
+      default: "Datacenter Munich"
+      enum:
+      - "Datacenter Munich"
+      - "Datacenter Frankfurt"
+    costcenter:
+      type: "integer"
+      default: 80001
+      enum:
+      - 80001
+      - 80002
+    selectnetwork:
+      type: "string"
+      title: "Select Network"
+  resources:
+    Cloud_Network_1:
+      type: "Cloud.Network"
+      metadata:
+        layoutPosition:
+        - 0
+        - 0
+      properties:
+        networkType: "existing"
+        constraints:
+        - tag: "${input.selectnetwork}"
+    centos8:
+      type: "Cloud.vSphere.Machine"
+      metadata:
+        layoutPosition:
+        - 1
+        - 1
+      properties:
+        owner: "${env.requestedBy}"
+        image: "CentOS8"
+        itop: "yes"
+        cpuCount: "${input.cpu}"
+        totalMemoryMB: "${input.memory}"
+        tags:
+        - key: "vraproject"
+          value: "${env.projectName}"
+        networks:
+        - network: "${resource.Cloud_Network_1.id}"
+          assignment: "static"
+          securityGroups: []
+        attachedDisks:
+        - source: "${resource.Cloud_vSphere_Disk_1.id}"
+    Cloud_vSphere_Disk_1:
+      type: "Cloud.vSphere.Disk"
+      metadata:
+        layoutPosition:
+        - 2
+        - 0
+      properties:
+        capacityGb: "${input.disk}"
+valid: true
+validationMessages: [
+  ]
+totalVersions: 7
+totalReleasedVersions: 5
+requestScopeOrg: false
+contentSourceSyncMessages: [
+  ]
