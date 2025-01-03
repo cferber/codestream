@@ -1,0 +1,60 @@
+id: f17c42ac-896d-4207-bcb6-17a900ff7a6f
+createdAt: '2022-06-28T13:34:38.223256Z'
+createdBy: cliebner
+updatedAt: '2024-11-15T07:33:00.134126Z'
+updatedBy: cferber-admin@vcc.vmw
+orgId: 084f2d85-99a1-4fd0-bf08-927ea57fd2dd
+projectId: 8592f8ff-ed6b-48e6-b742-7de740c4f112
+projectName: Shared-Project
+selfLink: /blueprint/api/blueprints/f17c42ac-896d-4207-bcb6-17a900ff7a6f
+name: CentOS-Shared
+description: Provision default CentOS 8 server. Service is shared across multiple
+  projects.
+status: DRAFT
+content: |
+  ---
+  formatVersion: 1
+  inputs:
+    cpu-number:
+      type: "integer"
+      title: "Number of CPUs"
+      description: "Select number of CPU between 1 and 8. Note: 4 CPU and higher require\
+        \ admin approval."
+      default: 2
+      minimum: 1
+      maximum: 8
+  resources:
+    Cloud_Network_1:
+      type: "Cloud.Network"
+      metadata:
+        layoutPosition:
+        - 0
+        - 0
+      properties:
+        networkType: "existing"
+    centos:
+      type: "Cloud.vSphere.Machine"
+      metadata:
+        layoutPosition:
+        - 1
+        - 1
+      properties:
+        image: "CentOS8"
+        cpuCount: "${input.cpu-number}"
+        itop: "yes"
+        totalMemoryMB: 2048
+        networks:
+        - network: "${resource.Cloud_Network_1.id}"
+          assignment: "static"
+        storage:
+          constraints:
+          - tag: "env:on-prem"
+        attachedDisks: []
+valid: true
+validationMessages: [
+  ]
+totalVersions: 6
+totalReleasedVersions: 6
+requestScopeOrg: true
+contentSourceSyncMessages: [
+  ]
