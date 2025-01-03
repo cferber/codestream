@@ -1,0 +1,7 @@
+{
+  "contentName": "CentOS-Shared",
+  "uniqueId": "f17c42ac-896d-4207-bcb6-17a900ff7a6f",
+  "contentType": "Automation-CloudTemplate",
+  "keyValues": {"contentEndpointVersion": "8.x"},
+  "descendents": []
+}
