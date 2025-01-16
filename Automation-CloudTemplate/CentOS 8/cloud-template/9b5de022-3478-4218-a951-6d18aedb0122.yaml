@@ -1,0 +1,59 @@
+id: 9b5de022-3478-4218-a951-6d18aedb0122
+createdAt: '2023-12-13T09:36:37.728097Z'
+createdBy: tkopton
+updatedAt: '2023-12-13T10:14:13.096027Z'
+updatedBy: tkopton
+orgId: 084f2d85-99a1-4fd0-bf08-927ea57fd2dd
+projectId: d59e9c65-cfcb-467e-8267-562d760b4570
+projectName: demo-project
+selfLink: /blueprint/api/blueprints/9b5de022-3478-4218-a951-6d18aedb0122
+name: CentOS 8
+description: ''
+status: DRAFT
+content: |
+  ---
+  formatVersion: 1
+  inputs:
+    Snapshot:
+      type: "string"
+      title: "Snapshot"
+      default: "yes"
+      enum:
+      - "yes"
+      - "no"
+  resources:
+    Cloud_Network_1:
+      type: "Cloud.Network"
+      metadata:
+        layoutPosition:
+        - 1
+        - 0
+      properties:
+        networkType: "existing"
+    centos:
+      type: "Cloud.vSphere.Machine"
+      metadata:
+        layoutPosition:
+        - 2
+        - 1
+      properties:
+        image: "tk-Centos8"
+        cpuCount: 2
+        itop: "yes"
+        snapshot: "${input.Snapshot}"
+        totalMemoryMB: 2048
+        remoteAccess:
+          username: "root"
+          password: "VMware123!"
+          authentication: "usernamePassword"
+        networks:
+        - network: "${resource.Cloud_Network_1.id}"
+          assignment: "static"
+valid: true
+validationMessages: [
+  ]
+totalVersions: 0
+totalReleasedVersions: 0
+requestScopeOrg: false
+contentSourceSyncMessages: [
+  ]

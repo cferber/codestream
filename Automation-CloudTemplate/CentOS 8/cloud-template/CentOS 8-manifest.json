@@ -1,0 +1,7 @@
+{
+  "contentName": "CentOS 8",
+  "uniqueId": "9b5de022-3478-4218-a951-6d18aedb0122",
+  "contentType": "Automation-CloudTemplate",
+  "keyValues": {"contentEndpointVersion": "8.x"},
+  "descendents": []
+}
